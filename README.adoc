@@ -1,0 +1,38 @@
+= Reproducting the issue
+
+. Ensure that everything is OK on Java 17:
++
+[source, bash]
+----
+./gradlew :app:run
+----
+
+. Change the Java version to 8 in link:app/build.gradle.kts[`app/build.gradle.kts`], lines #18–19:
++
+[source, diff]
+----
+ // This minimal reproducible example fails to run on Java 8!
+-// val javaLanguageVersion = JavaLanguageVersion.of(8)
+-val javaLanguageVersion = JavaLanguageVersion.of(17)
++val javaLanguageVersion = JavaLanguageVersion.of(8)
++// val javaLanguageVersion = JavaLanguageVersion.of(17)
+----
+
+. Repeat the test:
++
+[source, bash]
+----
+./gradlew :app:run
+----
+
+. Exception is thrown:
+[source]
+----
+> Task :app:run FAILED
+Exception in thread "main" java.lang.NoSuchMethodError: java.nio.ByteBuffer.flip()Ljava/nio/ByteBuffer;
+        at kotlinx.serialization.json.internal.CharsetReader.<init>(CharsetReader.kt:23)
+        at kotlinx.serialization.json.internal.JavaStreamSerialReader.<init>(JvmJsonStreams.kt:258)
+        at kotlinx.serialization.json.JvmStreamsKt.decodeFromStream(JvmStreams.kt:59)
+        at me.madhead.kotlinx.serialization.json.java8.AppKt.main(App.kt:13)
+        at me.madhead.kotlinx.serialization.json.java8.AppKt.main(App.kt)
+----
