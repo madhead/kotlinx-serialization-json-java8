@@ -12,10 +12,8 @@
 [source, diff]
 ----
  // This minimal reproducible example fails to run on Java 8!
--// val javaLanguageVersion = JavaLanguageVersion.of(8)
 -val javaLanguageVersion = JavaLanguageVersion.of(17)
 +val javaLanguageVersion = JavaLanguageVersion.of(8)
-+// val javaLanguageVersion = JavaLanguageVersion.of(17)
 ----
 
 . Repeat the test:
